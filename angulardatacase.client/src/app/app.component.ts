@@ -1,107 +1,49 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { CalculationService } from '@services/calculation.service';
+import { Analytic, DataSet, Grouping } from '@models';
 
-interface DataSetResponse {
-  id: number,
-  displayName: string
-}
-interface AnalyticResponse {
-  id: string,
-  displayName: string
-}
-
-interface GroupingResponse {
-  id: string,
-  displayName: string
-}
-
-interface NodeResponse {
-  id: string,
-  displayName: string
-}
-
-interface CalculateNodeResponse {
-  id: string,
-  result: number
+export function atLeastOne(control: AbstractControl): ValidationErrors | null {
+  return Array.isArray(control.value) && control.value.length > 0
+    ? null
+    : { required: true };
 }
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-  public dataSets: DataSetResponse[] = [];
-  public groupings: GroupingResponse[] = [];
-  public analytics: AnalyticResponse[] = [];
-  public groupingNodes: NodeResponse[] = [];
-  public calculatedAnalytics: CalculateNodeResponse[] = [];
+export class AppComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly calculation = inject(CalculationService);
 
-  constructor(private http: HttpClient) {}
+  readonly dataSets = toSignal(this.calculation.dataSets$, { initialValue: [] as DataSet[] });
+  readonly groupings = toSignal(this.calculation.groupings$, { initialValue: [] as Grouping[] });
+  readonly analytics = toSignal(this.calculation.analytics$, { initialValue: [] as Analytic[] });
 
-  ngOnInit() {
-    this.getDataSets();
-    this.getGroupings();
-    this.getAnalytics();
-    this.getNodeNames();
-    this.calculate();
+  readonly rows = this.calculation.rows;
+  readonly columns = this.calculation.columns;
+  readonly loading = this.calculation.loading;
+  readonly error = this.calculation.error;
+
+  readonly form = this.fb.group({
+    dataSet: this.fb.control<number | null>(null, Validators.required),
+    grouping: this.fb.control<string | null>(null, Validators.required),
+    analytics: this.fb.nonNullable.control<string[]>([], atLeastOne),
+  });
+
+  onCalculate(): void {
+    if (this.form.invalid) return;
+    const { dataSet, grouping, analytics } = this.form.getRawValue();
+    const selected = this.analytics().filter((a) => analytics.includes(a.id));
+    this.calculation.calculate(dataSet!, grouping!, selected);
   }
-
-  getDataSets() {
-    this.http.get<DataSetResponse[]>('/api/data/getdatasets').subscribe(
-      (result) => {
-        this.dataSets = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  getGroupings() {
-    this.http.get<GroupingResponse[]>('/api/data/getgroupings').subscribe(
-      (result) => {
-        this.groupings = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  getAnalytics() {
-    this.http.get<AnalyticResponse[]>('/api/data/getanalytics').subscribe(
-      (result) => {
-        this.analytics = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  getNodeNames() {
-    this.http.get<NodeResponse[]>('/api/data/getnodenames?grouping=SECURITY').subscribe(
-      (result) => {
-        this.groupingNodes = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  calculate() {
-    this.http.get<CalculateNodeResponse[]>('/api/data/calculate?grouping=SECURITY&analytic=A1&dataSet=0').subscribe(
-      (result) => {
-        this.calculatedAnalytics = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  title = 'angulardatacase.client';
 }

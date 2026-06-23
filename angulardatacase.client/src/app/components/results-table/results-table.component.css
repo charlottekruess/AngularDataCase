@@ -1,0 +1,16 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.empty {
+  text-align: center;
+}
+
+table.results {
+  width: 100%;
+}

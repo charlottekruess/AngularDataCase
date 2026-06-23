@@ -1,14 +1,41 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.page {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-table {
-    margin: 0 auto;
+.panel {
+  padding: 16px 20px;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+.field h3 {
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+.field small {
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 400;
+}
+
+.actions {
+  margin-top: 8px;
+}
+
+.error {
+  color: #b00020;
+  margin: 0;
 }

@@ -1,85 +1,40 @@
-<h1 id="tableLabel">Analytics Table</h1>
+<mat-toolbar color="primary" class="topbar">
+  <span>Analytics</span>
+</mat-toolbar>
 
-<p>This component demonstrates fetching data from the server.</p>
+<main class="page" [formGroup]="form">
+  <mat-card class="panel">
+    <section class="field">
+      <h3>Dataset</h3>
+      <app-select-toggle [options]="dataSets()" formControlName="dataSet" />
+    </section>
 
-<p *ngIf="!dataSets"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+    <section class="field">
+      <h3>Grouping</h3>
+      <app-select-toggle [options]="groupings()" formControlName="grouping" />
+    </section>
 
-DataSets:
-<table *ngIf="dataSets">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>DisplayName</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let dataSet of dataSets">
-      <td>{{ dataSet.id }}</td>
-      <td>{{ dataSet.displayName }}</td>
-    </tr>
-  </tbody>
-</table>
+    <section class="field">
+      <h3>Analytics <small>(choose at least one)</small></h3>
+      <app-select-toggle [multiple]="true" [options]="analytics()" formControlName="analytics" />
+    </section>
 
-Groupings:
-<table *ngIf="groupings">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>DisplayName</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let grouping of groupings">
-      <td>{{ grouping.id }}</td>
-      <td>{{ grouping.displayName }}</td>
-    </tr>
-  </tbody>
-</table>
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid || loading()"
+        (click)="onCalculate()">
+        Calculate
+      </button>
+    </div>
+  </mat-card>
 
-Analytics:
-<table *ngIf="analytics">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>DisplayName</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let analytic of analytics">
-      <td>{{ analytic.id }}</td>
-      <td>{{ analytic.displayName }}</td>
-    </tr>
-  </tbody>
-</table>
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
 
-Node Names for grouping=SECURITY:
-<table *ngIf="groupingNodes">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>DisplayName</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let groupingNode of groupingNodes">
-      <td>{{ groupingNode.id }}</td>
-      <td>{{ groupingNode.displayName }}</td>
-    </tr>
-  </tbody>
-</table>
-
-Calculation results for Analytic=A1, DataSet=0, grouping=SECURITY:
-<table *ngIf="calculatedAnalytics">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Result</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let calculatedAnalytic of calculatedAnalytics">
-      <td>{{ calculatedAnalytic.id }}</td>
-      <td>{{ calculatedAnalytic.result }}</td>
-    </tr>
-  </tbody>
-</table>
+  <mat-card class="panel">
+    <app-results-table [rows]="rows()" [columns]="columns()" [loading]="loading()" />
+  </mat-card>
+</main>

@@ -1,9 +1,16 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SelectToggleComponent } from '@components/select-toggle/select-toggle.component';
+import { ResultsTableComponent } from '@components/results-table/results-table.component';
 
 @NgModule({
   declarations: [
@@ -11,7 +18,14 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    // Material used directly in the container template
+    MatButtonModule, MatCardModule, MatToolbarModule,
+    // Standalone feature components
+    SelectToggleComponent,
+    ResultsTableComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

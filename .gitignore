@@ -1,0 +1,18 @@
+# ---------- macOS ----------
+.DS_Store
+
+# ---------- Node / Angular client ----------
+node_modules/
+# (angulardatacase.client/dist is also covered by the client's own .gitignore)
+
+# ---------- .NET / ASP.NET Core build output ----------
+[Bb]in/
+[Oo]bj/
+*.user
+.vs/
+
+# ---------- IDE / editor folders (repo root) ----------
+# The project's tracked angulardatacase.client/.vscode is kept;
+# these only ignore the root-level editor folders.
+/.idea/
+/.vscode/

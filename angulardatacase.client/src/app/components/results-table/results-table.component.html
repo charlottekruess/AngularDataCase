@@ -1,0 +1,29 @@
+@if (loading()) {
+  <div class="state">
+    <mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
+    <p>Calculating…</p>
+  </div>
+} @else if (rows().length === 0) {
+  <p class="state empty">
+    No results — choose a dataset, a grouping and at least one analytic, then press Calculate
+  </p>
+} @else {
+  <table mat-table [dataSource]="rows()" class="results">
+    <ng-container matColumnDef="nodeName">
+      <th mat-header-cell *matHeaderCellDef>Node</th>
+      <td mat-cell *matCellDef="let row">{{ row.nodeName }}</td>
+    </ng-container>
+
+    @for (col of columns(); track col.id) {
+      <ng-container [matColumnDef]="col.id">
+        <th mat-header-cell *matHeaderCellDef>{{ col.displayName }}</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.values[col.id] !== undefined ? (row.values[col.id] | number: '1.2-9') : '–' }}
+        </td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
+  </table>
+}
