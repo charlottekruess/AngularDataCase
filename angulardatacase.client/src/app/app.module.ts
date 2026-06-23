@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SelectToggleComponent } from '@components/select-toggle/select-toggle.component';
+import { SelectorsComponent } from '@components/selectors/selectors.component';
 import { ResultsTableComponent } from '@components/results-table/results-table.component';
 
 @NgModule({
@@ -21,10 +22,9 @@ import { ResultsTableComponent } from '@components/results-table/results-table.c
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    // Material used directly in the container template
     MatButtonModule, MatCardModule, MatToolbarModule,
-    // Standalone feature components
     SelectToggleComponent,
+    SelectorsComponent,
     ResultsTableComponent,
   ],
   providers: [],

@@ -9,7 +9,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { SelectToggleComponent } from '@components/select-toggle/select-toggle.component';
-import { ResultsTableComponent } from './components/results-table/results-table.component';
+import { SelectorsComponent } from '@components/selectors/selectors.component';
+import { ResultsTableComponent } from '@components/results-table/results-table.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -21,6 +22,7 @@ describe('AppComponent', () => {
         MatCardModule,
         MatToolbarModule,
         SelectToggleComponent,
+        SelectorsComponent,
         ResultsTableComponent,
       ],
       providers: [

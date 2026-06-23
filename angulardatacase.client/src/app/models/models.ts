@@ -1,7 +1,3 @@
-/**
- * Domain models mirroring the backend DTOs (api/Data/*).
- */
-
 export interface DataSet {
   id: number;
   displayName: string;

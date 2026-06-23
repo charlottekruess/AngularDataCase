@@ -1,39 +1,16 @@
 <mat-toolbar color="primary" class="topbar">
   <span>Analytics</span>
 </mat-toolbar>
-
 <main class="page" [formGroup]="form">
   <mat-card class="panel">
-    <section class="field">
-      <h3>Dataset</h3>
-      <app-select-toggle [options]="dataSets()" formControlName="dataSet" />
-    </section>
-
-    <section class="field">
-      <h3>Grouping</h3>
-      <app-select-toggle [options]="groupings()" formControlName="grouping" />
-    </section>
-
-    <section class="field">
-      <h3>Analytics <small>(choose at least one)</small></h3>
-      <app-select-toggle [multiple]="true" [options]="analytics()" formControlName="analytics" />
-    </section>
-
+    <app-selectors [dataSets]="dataSets()" [groupings]="groupings()" [analytics]="analytics()" />
     <div class="actions">
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="form.invalid || loading()"
-        (click)="onCalculate()">
+      <button mat-raised-button color="primary" [disabled]="form.invalid || loading()" (click)="onCalculate()">
         Calculate
       </button>
     </div>
   </mat-card>
-
-  @if (error()) {
-    <p class="error">{{ error() }}</p>
-  }
-
+  @if (error()) { <p class="error">{{ error() }}</p> }
   <mat-card class="panel">
     <app-results-table [rows]="rows()" [columns]="columns()" [loading]="loading()" />
   </mat-card>
