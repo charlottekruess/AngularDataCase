@@ -7,7 +7,7 @@ import { Analytic, DataSet, Grouping } from '@models';
   selector: 'app-selectors',
   standalone: true,
   imports: [ReactiveFormsModule, SelectToggleComponent],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }], // inherit parent's form
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
   template: `
     <section class="field">
       <h3>Dataset</h3>
