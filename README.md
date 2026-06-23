@@ -1,4 +1,4 @@
-# AngularDataCase — Solution
+# AngularDataCase Solution
 
 A small Angular 19 + ASP.NET Core (.NET 9) app where a user picks **one dataset, one
 grouping, and one or more analytics**. Pressing the calculate button retrieves the calculation result for the given selection and displays the calculated results per node in a table, showing only the node names (no IDs), and only for nodes where at least one analytic could be calculated.
