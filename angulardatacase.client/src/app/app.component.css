@@ -1,4 +1,4 @@
-.topbar {
+﻿.topbar {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -32,7 +32,7 @@
 }
 
 .actions {
-  margin-top: 8px;
+  margin-top: 24px;
 }
 
 .error {
