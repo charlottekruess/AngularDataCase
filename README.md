@@ -64,7 +64,7 @@ src/app/
   of waiting for all
 - Replace hard-coded text in templates with constants
 - Styling improvements
-- Dynamic reactive forms (use re-usable typed `SelectorItem` to build form sections based on data)
+- Dynamic reactive forms (use re-usable typed `SelectorItem` to build form sections based on data, see feature branch `dynamic-form`)
 
 
 ## Running it
