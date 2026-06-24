@@ -1,19 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  AbstractControl,
-  FormBuilder,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { CalculationService } from '@services/calculation.service';
 import { Analytic, DataSet, Grouping } from '@models';
-
-export function atLeastOne(control: AbstractControl): ValidationErrors | null {
-  return Array.isArray(control.value) && control.value.length > 0
-    ? null
-    : { required: true };
-}
+import { atLeastOne } from './validators/at-least-one.validator';
 
 @Component({
   selector: 'app-root',
