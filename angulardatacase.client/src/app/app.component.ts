@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -7,13 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { CalculationService } from '@services/calculation.service';
-import { Analytic, DataSet, Grouping } from '@models';
-
-export function atLeastOne(control: AbstractControl): ValidationErrors | null {
-  return Array.isArray(control.value) && control.value.length > 0
-    ? null
-    : { required: true };
-}
+import { Analytic, DataSet, Grouping, SelectorItem } from '@models';
+import { TXT } from './text-en';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +29,12 @@ export class AppComponent {
   readonly loading = this.calculation.loading;
   readonly error = this.calculation.error;
 
+  readonly sections = computed<SelectorItem[]>(() => [
+    { heading: TXT.dataset, controlName: 'dataSet', options: this.dataSets() },
+    { heading: TXT.grouping, controlName: 'grouping', options: this.groupings() },
+    { heading: TXT.analytics, controlName: 'analytics', options: this.analytics(), multiple: true, hint: TXT.analyticsHint },
+  ]);
+
   readonly form = this.fb.group({
     dataSet: this.fb.control<number | null>(null, Validators.required),
     grouping: this.fb.control<string | null>(null, Validators.required),
@@ -46,4 +47,10 @@ export class AppComponent {
     const selected = this.analytics().filter((a) => analytics.includes(a.id));
     this.calculation.calculate(dataSet!, grouping!, selected);
   }
+}
+
+export function atLeastOne(control: AbstractControl): ValidationErrors | null {
+  return Array.isArray(control.value) && control.value.length > 0
+    ? null
+    : { required: true };
 }

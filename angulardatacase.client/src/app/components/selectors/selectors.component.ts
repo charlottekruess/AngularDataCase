@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { SelectToggleComponent } from '@components/select-toggle/select-toggle.component';
-import { Analytic, DataSet, Grouping } from '@models';
+import { Analytic, DataSet, Grouping, SelectorItem } from '@models';
 
 @Component({
   selector: 'app-selectors',
@@ -9,22 +9,17 @@ import { Analytic, DataSet, Grouping } from '@models';
   imports: [ReactiveFormsModule, SelectToggleComponent],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
   template: `
-    <section class="field">
-      <h3>Dataset</h3>
-      <app-select-toggle [options]="dataSets" formControlName="dataSet" />
-    </section>
-    <section class="field">
-      <h3>Grouping</h3>
-      <app-select-toggle [options]="groupings" formControlName="grouping" />
-    </section>
-    <section class="field">
-      <h3>Analytics <small>(choose at least one)</small></h3>
-      <app-select-toggle [multiple]="true" [options]="analytics" formControlName="analytics" />
-    </section>
+    @for (section of sections; track section.controlName) {
+      <section class="field">
+        <h3>{{ section.heading }} @if (section.hint) { <small>({{ section.hint }})</small> }</h3>
+        <app-select-toggle
+          [options]="section.options"
+          [multiple]="section.multiple ?? false"
+          [formControlName]="section.controlName" />
+      </section>
+    }
   `,
 })
 export class SelectorsComponent {
-  @Input() dataSets: DataSet[] = [];
-  @Input() groupings: Grouping[] = [];
-  @Input() analytics: Analytic[] = [];
+  @Input() sections: SelectorItem[] = [];
 }

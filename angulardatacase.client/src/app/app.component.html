@@ -3,7 +3,7 @@
 </mat-toolbar>
 <main class="page" [formGroup]="form">
   <mat-card class="panel">
-    <app-selectors [dataSets]="dataSets()" [groupings]="groupings()" [analytics]="analytics()" />
+    <app-selectors [sections]="sections()" />
     <div class="actions">
       <button mat-raised-button color="primary" [disabled]="form.invalid || loading()" (click)="onCalculate()">
         Calculate
