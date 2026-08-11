@@ -56,7 +56,7 @@ src/app/
 - **No client-side filtering**: `Calculate` already returns only calculable nodes, and the
   table is built from that union, so no need for extra filter
 
-## Considerartions for later / if I had more time
+## Considerations for later / if I had more time
 - Table sorting / filtering / pagination
 - Implement accessibility standards (ARIA, screen-reader testing)
 - More tests (component + an integration test of the calculate flow)
